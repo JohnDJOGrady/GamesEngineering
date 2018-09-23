@@ -16,6 +16,7 @@ public:
 
 class Player : public CharacterAPI
 {
+	// refinement of the bridge pattern
 public:
 	Player(DrawAPI* api){ this->api = api; };
 	void Draw() { api->Draw(); };
