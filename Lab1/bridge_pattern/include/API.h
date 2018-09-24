@@ -1,6 +1,10 @@
 #ifndef DRAWAPI_H
 #define DRAWAPI_H
 
+///
+/// Abstraction / Interface and Implementation
+///
+
 class DrawAPI 
 {
 public:
