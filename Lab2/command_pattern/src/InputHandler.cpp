@@ -2,11 +2,12 @@
 
 void InputHandler::handleInput()
 {
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_A) > 0) { m_buttonA_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_B) > 0) { m_buttonB_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_X) > 0) { m_buttonX_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_Y) > 0) { m_buttonY_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) > 0) { m_leftClick_->execute(); };
+
+	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_A) == SDL_PRESSED) { m_buttonA_->execute(); };
+	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_B) == SDL_PRESSED) { m_buttonB_->execute(); };
+	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_X) == SDL_PRESSED) { m_buttonX_->execute(); };
+	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_Y) == SDL_PRESSED) { m_buttonY_->execute(); };
+	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == SDL_PRESSED) { m_leftClick_->execute(); };
 }
 
 void InputHandler::bindCommands()

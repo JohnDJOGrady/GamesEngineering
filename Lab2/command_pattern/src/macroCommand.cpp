@@ -8,19 +8,34 @@ MacroCommand::~MacroCommand()
 {
 }
 
-void MacroCommand::add(Command *)
+void MacroCommand::add(Command * c)
 {
+	commands->push_back(c);
 }
 
-void MacroCommand::remover(Command *)
+void MacroCommand::remove(Command * c)
 {
+	if (c != nullptr)
+	{
+		commands->remove(c);
+	}
 }
 
 void MacroCommand::execute()
 {
-	std::list<Command*>::iterator it;
-	for (it = commands->begin(); it != commands->end(); it++)
+	std::list<Command*>::iterator iter;
+	for (iter = commands->begin(); iter != commands->end(); iter++)
 	{
-		(*it)->execute();
+		(*iter)->execute();
+	}
+}
+
+void MacroCommand::undo()
+{
+	if (!commands->empty())
+	{
+		std::list<Command*>::iterator iter = commands->end();
+		--iter;
+		remove(*iter);
 	}
 }
