@@ -5,7 +5,6 @@
 /// @version 1.0
 /// </summary>
 
-
 #include <iostream>
 #include <vector>
 #include "Factory.h"

@@ -12,6 +12,7 @@ public:
 	GraphicProxy();
 	~GraphicProxy();
 	void Draw();
+
 private:
 	Graphic* graphic;
 	Graphic* getInstance();
