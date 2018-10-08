@@ -2,22 +2,21 @@
 #define INPUT_HANDLER_H
 
 #include <SDL.h>
-#include "ConcreteCommand.h"
+#include <ConcreteCommand.h>
 
 class InputHandler
 {
 public:
-	void handleInput();
-	void bindCommands();
+	InputHandler();
+	~InputHandler();
+	void handleInput(SDL_Event &e);
 
 private:
-	Command * m_buttonX_;
-	Command * m_buttonY_;
-	Command * m_buttonA_;
-	Command * m_buttonB_;
-	Command * m_leftClick_;
-
-	SDL_GameController *m_controller;
+	Command * m_keyX_;
+	Command * m_keyY_;
+	Command * m_spaceBar_;
+	Command * m_keyD_;
+	Command * m_keyA_;
 };
 
 #endif // !INPUT_HANDLER_H

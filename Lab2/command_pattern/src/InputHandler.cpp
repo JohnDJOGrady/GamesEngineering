@@ -1,20 +1,24 @@
-#include "InputHandler.h"
+#include <InputHandler.h>
 
-void InputHandler::handleInput()
+InputHandler::InputHandler()
 {
-
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_A) == SDL_PRESSED) { m_buttonA_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_B) == SDL_PRESSED) { m_buttonB_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_X) == SDL_PRESSED) { m_buttonX_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_Y) == SDL_PRESSED) { m_buttonY_->execute(); };
-	if (SDL_GameControllerGetButton(m_controller, SDL_CONTROLLER_BUTTON_LEFTSTICK) == SDL_PRESSED) { m_leftClick_->execute(); };
+	m_keyX_ = new FireCommand();
+	m_keyY_ = new MeleeCommand();
+	m_spaceBar_ = new JumpCommand();
+	m_keyD_ = new ShieldCommand();
+	m_keyA_ = new CrouchCommand();
 }
 
-void InputHandler::bindCommands()
+InputHandler::~InputHandler()
 {
-	m_buttonX_ = new FireCommand();
-	m_buttonA_ = new JumpCommand();
-	m_buttonB_ = new MeleeCommand();
-	m_buttonY_ = new ShieldCommand();
-	m_leftClick_ = new CrouchCommand();
+	delete this;
+}
+
+void InputHandler::handleInput(SDL_Event &e)
+{
+	if (e.key.keysym.sym == SDLK_SPACE) { m_spaceBar_->execute(); };
+	if (e.key.keysym.sym == SDLK_d) { m_keyD_->execute(); };
+	if (e.key.keysym.sym == SDLK_a) { m_keyA_->execute(); };
+	if (e.key.keysym.sym == SDLK_y) { m_keyY_->execute(); };
+	if (e.key.keysym.sym == SDLK_x) { m_keyX_->execute(); };
 }

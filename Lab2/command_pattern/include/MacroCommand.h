@@ -1,7 +1,7 @@
 #ifndef MACRO_COMMAND_H
 #define MACRO_COMMAND_H
 
-#include "Command.h"
+#include <Command.h>
 #include <list>
 class MacroCommand : public Command
 {

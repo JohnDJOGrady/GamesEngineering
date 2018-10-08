@@ -1,4 +1,4 @@
-#include "MacroCommand.h"
+#include <MacroCommand.h>
 
 MacroCommand::MacroCommand()
 {

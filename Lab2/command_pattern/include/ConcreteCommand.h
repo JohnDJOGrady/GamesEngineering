@@ -1,6 +1,6 @@
 #ifndef CONCRETE_COMMANDS_H
 #define CONCRETE_COMMANDS_H
-#include "Command.h"
+#include <Command.h>
 
 class JumpCommand : public Command
 {
