@@ -20,6 +20,10 @@ SDL_Surface* m_screenSurface = NULL;
 //The image we will load and show on the screen 
 SDL_Surface* m_media = NULL;
 
+/// <summary>
+/// Initialse the SDL entity and initialse the SDL window
+/// </summary>
+/// <returns>success flag boolean, throws an error if false</returns>
 bool init()
 {
 	// init check
@@ -51,6 +55,10 @@ bool init()
 	}
 }
 
+/// <summary>
+/// Load any resources from the resources folder
+/// </summary>
+/// <returns>success flag boolean, throws an error message and stops the code if return value is false</returns>
 bool loadMedia()
 {
 	// success flag
@@ -67,6 +75,9 @@ bool loadMedia()
 	return success;
 }
 
+/// <summary>
+/// handle safe deletion of any surfaces and quit out of the SDL window
+/// </summary>
 void close()
 {
 	//Deallocate surface 
@@ -79,6 +90,7 @@ void close()
 	SDL_Quit();
 }
 
+// main game loop
 int main(int argc, char * argv[])
 {
 	bool quit = false;
