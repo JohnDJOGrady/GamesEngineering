@@ -124,22 +124,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
-    <ClCompile Include="src\climbing.cpp" />
-    <ClCompile Include="src\idle.cpp" />
+    <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\inputHandler.cpp" />
-    <ClCompile Include="src\jumping.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Animation.h" />
-    <ClInclude Include="include\Climbing.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\ConcreteCommand.h" />
-    <ClInclude Include="include\Idle.h" />
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\InputHandler.h" />
-    <ClInclude Include="include\Jumping.h" />
-    <ClInclude Include="include\State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
