@@ -5,21 +5,40 @@
 /// @brief none
 /// </summary>
 
+
 #include <iostream>
-#include <InputHandler.h>
+#include <string>
 #include <SDL.h>
+#include <SDL_image.h>
+#include <InputHandler.h>
 
 //Screen dimension constants 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 460;
 
+std::string resourcePath = ".\\resources\\";
+
 //The window we'll be rendering to 
-SDL_Window* m_window = NULL;
+SDL_Window* m_window = nullptr;
+SDL_Renderer* m_renderer = nullptr;
+
 //The surface contained by the window 
-SDL_Surface* m_screenSurface = NULL;
+SDL_Surface* m_screenSurface = nullptr;
 
 //The image we will load and show on the screen 
-SDL_Surface* m_media = NULL;
+SDL_Surface* m_media = nullptr;
+
+void log(const std::string &message)
+{
+	if (SDL_GetError() != nullptr)
+	{
+		std::cout << message << " error: " << SDL_GetError() << std::endl;
+	}
+	else
+	{
+		std::cout << message << std::endl;
+	}
+}
 
 /// <summary>
 /// Initialse the SDL entity and initialse the SDL window
@@ -31,52 +50,70 @@ bool init()
 	bool success = true;
 
 	// Init SDL Visual Elements
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		std::cout << ("SDL could not initialize! SDL_Error: %s\n", SDL_GetError()) << std::endl;
-
+		log("Initialisation");
 		return false;
 	}
-
 	else
 	{
 		//Create window 
 		m_window = SDL_CreateWindow("SDL Command Pattern", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (m_window == NULL)
+		if (m_window == nullptr)
 		{
-			std::cout << ("Window could not be created! SDL_Error: %s\n", SDL_GetError()) << std::endl;
+			log("Window creation");
 			success = false;
 		}
 		else
 		{
+			m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (m_renderer == nullptr)
+			{
+				SDL_DestroyWindow(m_window);
+				log("Renderer creation");
+				success = false;
+			}
+
 			// Get window surface
 			m_screenSurface = SDL_GetWindowSurface(m_window);
+			IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG); // allow for png and jpeg images to be loaded in
 		}
 		return success;
 	}
 }
 
-/// <summary>
-/// Optimised Surface loading
-/// </summary>
-SDL_Surface * loadSurface(std::string &path)
+bool loadResources()
 {
-	SDL_Surface* surface = NULL;
-	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
-	if (loadedSurface == NULL)
+	// return flag for succesful load;
+	bool success = true;
+
+	// queue resource loading here
+	return success;
+}
+
+/// <summary>
+/// Optimised texture loading
+/// </summary>
+SDL_Texture * loadTexture(std::string &path)
+{
+	SDL_Texture* texture = nullptr;
+	SDL_Surface* loadedFile = IMG_Load(path.c_str());
+	if (loadedFile != nullptr)
 	{
-		std::cout << ("Failure to load surface %s! SDL Error: %s", path.c_str(), SDL_GetError()) << std::endl;
+		// create a texture from the loaded image file
+		texture = SDL_CreateTextureFromSurface(m_renderer, loadedFile);
+		SDL_FreeSurface(loadedFile);
+		if (texture == nullptr)
+		{
+			log("Texture loading from surface");
+		}
 	}
 	else
 	{
-		surface = SDL_ConvertSurface(loadedSurface, m_screenSurface->format, NULL);
-		if (surface == NULL)
-		{
-			std::cout << ("Failure to optimised loaded surface %s! SDL Error: %s", path.c_str(), SDL_GetError()) << std::endl;
-		}
-		SDL_FreeSurface(loadedSurface);
+		log("Loading IMG");
 	}
-	return surface;	
+
+	return texture;
 }
 
 /// <summary>
@@ -98,20 +135,21 @@ void close()
 int main(int argc, char * argv[])
 {
 	bool quit = false;
+
 	SDL_Event e;
 	InputHandler * keys = new InputHandler();
-	std::string path = "hello";
+	std::string texturePath = resourcePath + "grid.png";
 
 	if (!init())
 	{
-		std::cout << "Failed to init" << std::endl;
+		log("Failed to init SDL elements");
 		SDL_Delay(2000);
 	}
 	else
 	{
-		if (!loadSurface(path))
+		if (!loadTexture(texturePath))
 		{
-			std::cout << "Failed to load media" << std::endl;
+			log("Failed to load media");
 			SDL_Delay(2000);
 		}
 		else
@@ -128,8 +166,6 @@ int main(int argc, char * argv[])
 				{
 					quit = true;
 				}
-
-
 				//update()
 				//render()
 				keys->handleInput(e);
