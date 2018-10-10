@@ -51,22 +51,6 @@ bool init()
 	}
 }
 
-bool loadMedia()
-{
-	// success flag
-	bool success = true;
-	// unused code from SDL game loop setup
-	 /*
-	m_media = SDL_LoadBMP("./airplane.bmp");
-	if (m_media == NULL)
-	{ 
-		std::cout << ("Unable to load image %s! SDL Error: %s\n", "airplane", SDL_GetError()) << std::endl;
-		success = false; 
-	}
-	*/
-	return success;
-}
-
 void close()
 {
 	//Deallocate surface 
@@ -92,17 +76,9 @@ int main(int argc, char * argv[])
 	}
 	else
 	{
-		if (!loadMedia())
-		{
-			std::cout << "Failed to load media" << std::endl;
-			SDL_Delay(2000);
-		}
-		else
-		{
-			SDL_BlitSurface(m_media, NULL, m_screenSurface, NULL);
-			SDL_UpdateWindowSurface(m_window);
-			SDL_Delay(2000);
-		}
+		SDL_BlitSurface(m_media, NULL, m_screenSurface, NULL);
+		SDL_UpdateWindowSurface(m_window);
+		SDL_Delay(2000);
 
 		while (!quit)
 		{

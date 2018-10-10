@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <ConcreteCommand.h>
+#include <MacroCommand.h>
 
 class InputHandler
 {
@@ -17,6 +18,7 @@ private:
 	Command * m_spaceBar_;
 	Command * m_keyD_;
 	Command * m_keyA_;
+	MacroCommand * m_macro;
 };
 
 #endif // !INPUT_HANDLER_H
