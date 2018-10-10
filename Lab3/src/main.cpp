@@ -17,6 +17,7 @@ const int SCREEN_HEIGHT = 460;
 SDL_Window* m_window = NULL;
 //The surface contained by the window 
 SDL_Surface* m_screenSurface = NULL;
+
 //The image we will load and show on the screen 
 SDL_Surface* m_media = NULL;
 
@@ -29,7 +30,7 @@ bool init()
 	// init check
 	bool success = true;
 
-	// Init
+	// Init SDL Visual Elements
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cout << ("SDL could not initialize! SDL_Error: %s\n", SDL_GetError()) << std::endl;
@@ -56,23 +57,26 @@ bool init()
 }
 
 /// <summary>
-/// Load any resources from the resources folder
+/// Optimised Surface loading
 /// </summary>
-/// <returns>success flag boolean, throws an error message and stops the code if return value is false</returns>
-bool loadMedia()
+SDL_Surface * loadSurface(std::string &path)
 {
-	// success flag
-	bool success = true;
-	// unused code from SDL game loop setup
-	/*
-	m_media = SDL_LoadBMP("./airplane.bmp");
-	if (m_media == NULL)
+	SDL_Surface* surface = NULL;
+	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
+	if (loadedSurface == NULL)
 	{
-	std::cout << ("Unable to load image %s! SDL Error: %s\n", "airplane", SDL_GetError()) << std::endl;
-	success = false;
+		std::cout << ("Failure to load surface %s! SDL Error: %s", path.c_str(), SDL_GetError()) << std::endl;
 	}
-	*/
-	return success;
+	else
+	{
+		surface = SDL_ConvertSurface(loadedSurface, m_screenSurface->format, NULL);
+		if (surface == NULL)
+		{
+			std::cout << ("Failure to optimised loaded surface %s! SDL Error: %s", path.c_str(), SDL_GetError()) << std::endl;
+		}
+		SDL_FreeSurface(loadedSurface);
+	}
+	return surface;	
 }
 
 /// <summary>
@@ -96,6 +100,7 @@ int main(int argc, char * argv[])
 	bool quit = false;
 	SDL_Event e;
 	InputHandler * keys = new InputHandler();
+	std::string path = "hello";
 
 	if (!init())
 	{
@@ -104,7 +109,7 @@ int main(int argc, char * argv[])
 	}
 	else
 	{
-		if (!loadMedia())
+		if (!loadSurface(path))
 		{
 			std::cout << "Failed to load media" << std::endl;
 			SDL_Delay(2000);
@@ -113,7 +118,6 @@ int main(int argc, char * argv[])
 		{
 			SDL_BlitSurface(m_media, NULL, m_screenSurface, NULL);
 			SDL_UpdateWindowSurface(m_window);
-			SDL_Delay(2000);
 		}
 
 		while (!quit)
@@ -124,6 +128,10 @@ int main(int argc, char * argv[])
 				{
 					quit = true;
 				}
+
+
+				//update()
+				//render()
 				keys->handleInput(e);
 			}
 		}
