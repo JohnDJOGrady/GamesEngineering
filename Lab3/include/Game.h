@@ -19,17 +19,19 @@ public:
 	~Game();
 	bool init();
 	void run();
-	void update(SDL_Event &e);
+	void event(SDL_Event &e);
+	void update();
 	void render();
 	void cleanup();
 
-	void handleInput();
+	
 	void log(const std::string &message);
 	bool loadResources();
 
 	SDL_Texture* loadTexture(std::string &path);
 	void renderTexture(SDL_Texture* texture, int x, int y);
 	void renderTexture(SDL_Texture* texture, int x, int y, int w, int h);
+	void renderTexture(SDL_Texture* texture, int x, int y, int _x, int _y, int w, int h);
 
 private:
 	// default resource path
@@ -44,7 +46,7 @@ private:
 	//The surface contained by the window 
 	SDL_Surface* m_screenSurface = nullptr;
 	SDL_Texture* m_texture = nullptr;
-
+	InputHandler m_keys;
 	std::vector<SDL_Texture*> m_textures;
 };
 

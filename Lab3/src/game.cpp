@@ -80,30 +80,29 @@ void Game::run()
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
-			if (e.type == SDL_QUIT)
-			{
-				end = true;
-			}
-
-			update(e);
-			render();
+			event(e);
 		}
+		update();
+		render();
 	}
-
 	cleanup();
+}
+
+void Game::event(SDL_Event & e)
+{
+	m_keys.handleInput(e);
 }
 
 ///<summary>
 /// common update loop, called every game cycle
 /// @param e - event handler
 ///</summary>
-void Game::update(SDL_Event &e)
+void Game::update()
 {
-	handleInput();
 }
 
 ///<summary>
-///
+/// render any textures and game entities to the SDL_Renderer
 ///</summary>
 void Game::render()
 {
@@ -114,7 +113,6 @@ void Game::render()
 	int y = SCREEN_HEIGHT / 2 - height / 2;
 	renderTexture(m_texture, x , y, 200, 200);
 	SDL_RenderPresent(m_renderer);
-	SDL_Delay(1000);
 }
 
 /// <summary>
@@ -227,8 +225,21 @@ void Game::renderTexture(SDL_Texture * texture, int x, int y, int w, int h)
 }
 
 ///<summary>
-///
+/// Render the target location within a texture
+/// @param texture - pointer to the texture object we want to render
+/// @param x - start x loc of where we want the target rendererd
+/// @param y - start y loc of render target
+/// @param _x - the end range of the x component of the texture we want rendered
+/// @param _y - the end range of the y component of the texture we want rendered
+/// @param w - width of the texture to be drawn
+/// @param h - height of the texutre to be drawn
 ///</summary>
-void Game::handleInput()
+void Game::renderTexture(SDL_Texture * texture, int x, int y, int _x, int _y, int w, int h)
 {
+	SDL_Rect targetRect;
+	targetRect.x = x;
+	targetRect.y = y;
+	targetRect.w = w;
+	targetRect.h = h;
+	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
 }
