@@ -9,6 +9,7 @@ class Animation
 public:
 	Animation();
 	void setCurrent(State *s) { m_current = s; };
+	void setPrevious(State *s) { m_previous = s; };
 	void idle();
 	void jumping();
 	void action();

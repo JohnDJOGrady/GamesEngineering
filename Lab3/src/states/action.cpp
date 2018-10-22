@@ -3,7 +3,7 @@
 
 void Action::idle(Animation * a)
 {
-	std::cout << "Idle" << std::endl;
-	a->setCurrent(new Action());
+	std::cout << "Action to Idle" << std::endl;
+	a->setCurrent(new Idle());
 	delete this;
 }
