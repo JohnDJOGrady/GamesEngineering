@@ -2,12 +2,13 @@
 #define COMMAND_H
 
 #include <iostream>
+#include <Animation.h>
 
 class Command
 {
 public:
 	virtual ~Command() {};
-	virtual void execute() = 0;
+	virtual void execute(Animation*a) = 0;
 	virtual void undo() = 0;
 
 protected:

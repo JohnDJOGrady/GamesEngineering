@@ -128,6 +128,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\inputHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\states\action.cpp" />
     <ClCompile Include="src\states\idle.cpp" />
     <ClCompile Include="src\states\jumping.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="include\ConcreteCommand.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\States\Action.h" />
     <ClInclude Include="include\States\Idle.h" />
     <ClInclude Include="include\States\Jumping.h" />

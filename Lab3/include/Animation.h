@@ -2,6 +2,12 @@
 #define ANIMATION_H
 #include <iostream>
 
+enum Anim {
+	IDLE,
+	JUMP,
+	ACTION
+};
+
 class Animation
 {
 	class State* m_current;
@@ -14,7 +20,17 @@ public:
 	void jumping();
 	void action();
 
+	void setMaxFrames(int max);
+	void setFrameRate(int rate);
+	void setCurrentFrame(int frame);
+	int getcurrentFrame();
+	Anim getCurrentState();
+
 private:
+	Anim m_currentState;
+	int m_currentFrame;
+	int m_maxFrames;
+	int m_frameRate;
 };
 
 #endif // !ANIMATION_H

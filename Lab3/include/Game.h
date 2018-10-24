@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <Player.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
@@ -19,25 +20,18 @@ public:
 	~Game();
 	bool init();
 	void run();
-	void event(SDL_Event &e);
 	void update();
 	void render();
 	void cleanup();
 
-	
 	void log(const std::string &message);
 	bool loadResources();
 
 	SDL_Texture* loadTexture(std::string &path);
-	void renderTexture(SDL_Texture* texture, int x, int y);
-	void renderTexture(SDL_Texture* texture, int x, int y, int w, int h);
-	void renderTexture(SDL_Texture* texture, int x, int y, int _x, int _y, int w, int h);
 
 private:
 	// default resource path
 	std::string m_resourcePath = ".\\resources\\";
-	// pointer to the currentKey state, updated every time SDL polls and event
-	const Uint8* m_currentKeys = SDL_GetKeyboardState(NULL);
 
 	// The window we'll be rendering to and the renderer
 	SDL_Window* m_window = nullptr;
@@ -45,9 +39,8 @@ private:
 
 	//The surface contained by the window 
 	SDL_Surface* m_screenSurface = nullptr;
-	SDL_Texture* m_texture = nullptr;
-	InputHandler m_keys;
-	std::vector<SDL_Texture*> m_textures;
+
+	Player m_player;
 };
 
 #endif // ! GAME_H

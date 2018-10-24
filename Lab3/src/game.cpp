@@ -3,18 +3,15 @@
 ///<summary>
 /// Default constructor
 ///</summary>
-Game::Game()
+Game::Game() : m_player(200.f, 200.f)
 {
 	if (!init())
 	{
 		log("Failed to init SDL elements");
 	}
 
-	std::string grid = m_resourcePath + "grid.png";
-	m_texture = loadTexture(grid);
-
-	// loading texture vector for easy cleanup
-	m_textures.push_back(m_texture);
+	std::string grid = m_resourcePath + "spritesheetmegaman1.png";
+	m_player.setTexture(loadTexture(grid));
 }
 
 ///<summary>
@@ -80,17 +77,12 @@ void Game::run()
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
-			event(e);
+			m_player.handleInput(e);
 		}
 		update();
 		render();
 	}
 	cleanup();
-}
-
-void Game::event(SDL_Event & e)
-{
-	m_keys.handleInput(e);
 }
 
 ///<summary>
@@ -99,6 +91,7 @@ void Game::event(SDL_Event & e)
 ///</summary>
 void Game::update()
 {
+	m_player.update();
 }
 
 ///<summary>
@@ -107,11 +100,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
-	int width, height;
-	SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
-	int x = SCREEN_WIDTH / 2 - width / 2;
-	int y = SCREEN_HEIGHT / 2 - height / 2;
-	renderTexture(m_texture, x , y, 200, 200);
+	m_player.render(m_renderer);
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -120,11 +109,6 @@ void Game::render()
 /// </summary>
 void Game::cleanup()
 {
-	// Destroy all textures
-	for (auto &tex : m_textures)
-	{
-		SDL_DestroyTexture(tex);
-	}
 
 	// Destroy Window
 	SDL_DestroyRenderer(m_renderer);
@@ -188,58 +172,4 @@ SDL_Texture * Game::loadTexture(std::string &path)
 	}
 
 	return texture;
-}
-
-///<summary>
-/// Render the texture at the location provided, query texture for it's original width and height
-/// @param texture - pointer to texture object we want to render
-/// @param x - the target x position of where we want to render
-/// @param y - the target y position of where we want to render
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-
-	SDL_QueryTexture(texture, nullptr, nullptr, &targetRect.w, &targetRect.h);
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
-}
-
-///<summary>
-/// Render the texture at the location provided, allows for custom scaling of width and height
-/// @param texture - pointer to the texture object we want to render
-/// @param x - x loc of where we want the target rendererd
-/// @param y - y loc of render target
-/// @param w - width of the texture to be drawn
-/// @param h - height of the texutre to be drawn
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y, int w, int h)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-	targetRect.w = w;
-	targetRect.h = h;
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
-}
-
-///<summary>
-/// Render the target location within a texture
-/// @param texture - pointer to the texture object we want to render
-/// @param x - start x loc of where we want the target rendererd
-/// @param y - start y loc of render target
-/// @param _x - the end range of the x component of the texture we want rendered
-/// @param _y - the end range of the y component of the texture we want rendered
-/// @param w - width of the texture to be drawn
-/// @param h - height of the texutre to be drawn
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y, int _x, int _y, int w, int h)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-	targetRect.w = w;
-	targetRect.h = h;
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
 }
