@@ -11,6 +11,7 @@ public:
 	InputHandler();
 	~InputHandler();
 	void handleInput(SDL_Event &e);
+	Animation * animation;
 
 private:
 	Command * m_keyX_;
@@ -19,7 +20,6 @@ private:
 	Command * m_keyD_;
 	Command * m_keyA_;
 
-	Animation * animation;
 };
 
 #endif // !INPUT_HANDLER_H

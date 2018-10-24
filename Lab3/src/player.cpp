@@ -1,13 +1,18 @@
 #include <Player.h>
 
-Player::Player()
+Player::Player() : m_keys()
 {
+	m_srcRect = new SDL_Rect();
+
 	frame_dim = 64;
-	frame_count = 3;
-	m_srcRect.x = 0;
-	m_srcRect.y = 0;
-	m_srcRect.w = frame_dim;
-	m_srcRect.h = frame_dim;
+
+	m_srcRect->x = 0;
+	m_srcRect->y = 0;
+	m_srcRect->w = frame_dim;
+	m_srcRect->h = frame_dim;
+
+	m_keys.animation->setRect(m_srcRect);
+
 
 	m_targetRect.x = 0;
 	m_targetRect.y = 0;
@@ -35,7 +40,7 @@ void Player::handleInput(SDL_Event & e)
 
 void Player::update()
 {
-	m_srcRect.x = frame_dim * frame_count;
+	m_srcRect->x = frame_dim * frame_count;
 	frame_count += 1;
 	if (frame_count > 5)
 	{
@@ -62,7 +67,7 @@ void Player::cleanup()
 ///</summary>
 void Player::renderTexture(SDL_Renderer* renderer, SDL_Texture * texture)
 {
-	SDL_RenderCopy(renderer, texture, &m_srcRect, &m_targetRect);
+	SDL_RenderCopy(renderer, texture, m_srcRect, &m_targetRect);
 }
 
 void Player::setTexture(SDL_Texture* texture)

@@ -1,6 +1,7 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 #include <iostream>
+#include <SDL.h>
 
 enum Anim {
 	IDLE,
@@ -20,6 +21,7 @@ public:
 	void jumping();
 	void action();
 
+	void setRect(SDL_Rect* src);
 	void setMaxFrames(int max);
 	void setFrameRate(int rate);
 	void setCurrentFrame(int frame);
@@ -27,6 +29,7 @@ public:
 	Anim getCurrentState();
 
 private:
+	SDL_Rect* m_SrcRect;
 	Anim m_currentState;
 	int m_currentFrame;
 	int m_maxFrames;

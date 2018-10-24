@@ -34,7 +34,7 @@ private:
 	v m_pos;
 	SDL_Texture* m_texture;
 	SDL_Rect m_targetRect;
-	SDL_Rect m_srcRect;
+	SDL_Rect* m_srcRect;
 
 	int frame_count = 0;
 	int frame_dim;
