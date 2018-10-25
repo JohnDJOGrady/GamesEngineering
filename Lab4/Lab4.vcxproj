@@ -127,11 +127,12 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\inputHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Systems\System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Components\Component.h" />
-    <ClInclude Include="include\Components\Renderer.h" />
+    <ClInclude Include="include\Components\SpriteComponent.h" />
     <ClInclude Include="include\ConcreteCommand.h" />
     <ClInclude Include="include\Entitys\Entity.h" />
     <ClInclude Include="include\Game.h" />

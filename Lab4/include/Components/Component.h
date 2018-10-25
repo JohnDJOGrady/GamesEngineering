@@ -1,13 +1,14 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <iostream>
-#include <string>
+#include <SDL.h>
 
 class Component
 {
+	int m_id;
 public:
-	virtual void getComponent() {};
+	virtual void setID(int id) { m_id = id; };
+	virtual int getID() { return m_id; };
 private:
 };
 
