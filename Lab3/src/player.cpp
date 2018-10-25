@@ -62,8 +62,6 @@ void Player::cleanup()
 ///<summary>
 /// Render the texture at the location provided, query texture for it's original width and height
 /// @param texture - pointer to texture object we want to render
-/// @param x - the target x position of where we want to render
-/// @param y - the target y position of where we want to render
 ///</summary>
 void Player::renderTexture(SDL_Renderer* renderer, SDL_Texture * texture)
 {
