@@ -9,8 +9,8 @@ class RenderSystem : public System
 public:
 	RenderSystem() {};
 	void addEntity(Entity ent) override;
-	void updateComponent(Component *c) override {};
-	void draw(SDL_Renderer * renderer);
+	void updateComponent(Component *com) override {};
+	void draw(SDL_Renderer * renderer); // custom draw method, issues with nullptrs
 };
 
 #endif // !RENDERSYSTEM_H

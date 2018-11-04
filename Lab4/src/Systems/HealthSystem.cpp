@@ -5,9 +5,12 @@ void HealthSystem::addEntity(Entity ent)
 	m_entities.push_back(ent);
 }
 
+///<summary>
+/// cycle through each health component and decrement by one, when the characters value reaches 0, announce dead via the console
+///</summary>
 void HealthSystem::updateComponent(Component * com)
 {
-	if (com->getId() == 1)
+	if (com->getType() == HEALTH)
 	{
 		HealthComponent* health = dynamic_cast<HealthComponent*>(com);
 		if (health != nullptr)

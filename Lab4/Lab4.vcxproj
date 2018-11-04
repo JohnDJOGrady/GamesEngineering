@@ -138,17 +138,22 @@
     <ClCompile Include="src\Entitys\Entity.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Systems\AISystem.cpp" />
+    <ClCompile Include="src\Systems\ControlSystem.cpp" />
     <ClCompile Include="src\Systems\HealthSystem.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Systems\System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Components\Component.h" />
+    <ClInclude Include="include\Components\ControlComponent.h" />
     <ClInclude Include="include\Components\HealthComponent.h" />
     <ClInclude Include="include\Components\PositionComponent.h" />
     <ClInclude Include="include\Components\SpriteComponent.h" />
     <ClInclude Include="include\Entitys\Entity.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\Systems\AISystem.h" />
+    <ClInclude Include="include\Systems\ControlSystem.h" />
     <ClInclude Include="include\Systems\HealthSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\System.h" />

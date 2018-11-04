@@ -17,7 +17,6 @@ void System::update()
 
 void System::updateComponent(Component * com)
 {
-
 }
 
 void System::addEntity(Entity ent)

@@ -7,6 +7,7 @@
 class HealthComponent : public Component {
 public:
 	HealthComponent(std::string name);
+	HealthComponent(std::string name, int health);
 	std::string getName();
 	int getHealth();
 	void setHealth(int value);

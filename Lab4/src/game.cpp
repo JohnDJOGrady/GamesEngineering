@@ -3,8 +3,9 @@
 ///<summary>
 /// Default constructor
 ///</summary>
-Game::Game()
+Game::Game() : player(1), alien(2), cat(3), dog(4)
 {
+	srand(time(NULL));
 	if (!init())
 	{
 		log("Failed to init SDL elements");
@@ -12,19 +13,20 @@ Game::Game()
 
 	std::string path = m_resourcePath + "grid.png";
 	m_spriteSheet = loadTexture(path);
-	player.addComponent(new HealthComponent("Player"));
+	player.addComponent(new HealthComponent("Player", 150));
 	player.addComponent(new PositionComponent(200, 400));
 	player.addComponent(new SpriteComponent(m_spriteSheet, 0, 0, 85, 85));
+	player.addComponent(new ControlComponent());
 
-	alien.addComponent(new HealthComponent("Alien"));
+	alien.addComponent(new HealthComponent("Alien", 75));
 	alien.addComponent(new PositionComponent(400, 200));
 	alien.addComponent(new SpriteComponent(m_spriteSheet, 85, 0, 85, 85));
 
-	cat.addComponent(new HealthComponent("Cat"));
+	cat.addComponent(new HealthComponent("Cat", 300));
 	cat.addComponent(new PositionComponent(500, 700));
 	cat.addComponent(new SpriteComponent(m_spriteSheet, 170, 0, 85, 85));
 
-	dog.addComponent(new HealthComponent("Dog"));
+	dog.addComponent(new HealthComponent("Dog", 500));
 	dog.addComponent(new PositionComponent(1000, 300));
 	dog.addComponent(new SpriteComponent(m_spriteSheet, 255, 0, 85, 85));
 	
@@ -38,6 +40,11 @@ Game::Game()
 	healthSys.addEntity(cat);
 	healthSys.addEntity(dog);
 
+	aiSys.addEntity(alien);
+	aiSys.addEntity(cat);
+	aiSys.addEntity(dog);
+
+	controlSys.addEntity(player);
 }
 
 ///<summary>
@@ -113,7 +120,13 @@ void Game::run()
 
 void Game::event(SDL_Event & e)
 {
-
+	if (e.type == SDL_QUIT)
+	{
+	}
+	if (e.type == SDL_KEYDOWN)
+	{
+		controlSys.handle(e.key.keysym.sym);
+	}
 }
 
 ///<summary>
@@ -123,6 +136,8 @@ void Game::event(SDL_Event & e)
 void Game::update()
 {
 	healthSys.update();
+	aiSys.update();
+	controlSys.updatePosition();
 }
 
 ///<summary>
@@ -189,38 +204,4 @@ SDL_Texture * Game::loadTexture(std::string &path)
 	}
 
 	return texture;
-}
-
-///<summary>
-/// Render the texture at the location provided, query texture for it's original width and height
-/// @param texture - pointer to texture object we want to render
-/// @param x - the target x position of where we want to render
-/// @param y - the target y position of where we want to render
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-
-	SDL_QueryTexture(texture, nullptr, nullptr, &targetRect.w, &targetRect.h);
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
-}
-
-///<summary>
-/// Render the texture at the location provided, allows for custom scaling of width and height
-/// @param texture - pointer to the texture object we want to render
-/// @param x - x loc of where we want the target rendererd
-/// @param y - y loc of render target
-/// @param w - width of the texture to be drawn
-/// @param h - height of the texutre to be drawn
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y, int w, int h)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-	targetRect.w = w;
-	targetRect.h = h;
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
 }

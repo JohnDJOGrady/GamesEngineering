@@ -8,8 +8,8 @@ class HealthSystem : public System
 public:
 	HealthSystem() {};
 	~HealthSystem() {};
-	void addEntity(Entity e) override;
-	void updateComponent(Component * c) override;
+	void addEntity(Entity ent) override;
+	void updateComponent(Component * com) override;
 };
 
 #endif // !HEALTHSYSTEM_H

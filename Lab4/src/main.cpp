@@ -1,8 +1,8 @@
 /// <summary>
-/// @mainpage SDL FSM
+/// @mainpage SDL ECS
 /// @author(s) John O'Grady
 /// @version 1.0
-/// @brief FSM animation using the SDL library
+/// @brief ECS Lab - Entity Component System implementation
 /// </summary>
 
 #include <Game.h>

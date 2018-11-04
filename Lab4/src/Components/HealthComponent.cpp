@@ -2,8 +2,15 @@
 
 HealthComponent::HealthComponent(std::string name)
 {
-	m_id = 1;
+	m_type = HEALTH;
 	m_health = 100;
+	m_name = name;
+}
+
+HealthComponent::HealthComponent(std::string name, int health)
+{
+	m_type = HEALTH;
+	m_health = health;
 	m_name = name;
 }
 
