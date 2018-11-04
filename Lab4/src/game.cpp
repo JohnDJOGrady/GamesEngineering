@@ -10,11 +10,34 @@ Game::Game()
 		log("Failed to init SDL elements");
 	}
 
-	std::string grid = m_resourcePath + "grid.png";
-	m_texture = loadTexture(grid);
+	std::string path = m_resourcePath + "grid.png";
+	m_spriteSheet = loadTexture(path);
+	player.addComponent(new HealthComponent("Player"));
+	player.addComponent(new PositionComponent(200, 400));
+	player.addComponent(new SpriteComponent(m_spriteSheet, 0, 0, 85, 85));
 
-	// loading texture vector for easy cleanup
-	m_textures.push_back(m_texture);
+	alien.addComponent(new HealthComponent("Alien"));
+	alien.addComponent(new PositionComponent(400, 200));
+	alien.addComponent(new SpriteComponent(m_spriteSheet, 85, 0, 85, 85));
+
+	cat.addComponent(new HealthComponent("Cat"));
+	cat.addComponent(new PositionComponent(500, 700));
+	cat.addComponent(new SpriteComponent(m_spriteSheet, 170, 0, 85, 85));
+
+	dog.addComponent(new HealthComponent("Dog"));
+	dog.addComponent(new PositionComponent(1000, 300));
+	dog.addComponent(new SpriteComponent(m_spriteSheet, 255, 0, 85, 85));
+	
+	renderSys.addEntity(player);
+	renderSys.addEntity(alien);
+	renderSys.addEntity(cat);
+	renderSys.addEntity(dog);
+
+	healthSys.addEntity(player);
+	healthSys.addEntity(alien);
+	healthSys.addEntity(cat);
+	healthSys.addEntity(dog);
+
 }
 
 ///<summary>
@@ -90,7 +113,7 @@ void Game::run()
 
 void Game::event(SDL_Event & e)
 {
-	m_keys.handleInput(e);
+
 }
 
 ///<summary>
@@ -99,6 +122,7 @@ void Game::event(SDL_Event & e)
 ///</summary>
 void Game::update()
 {
+	healthSys.update();
 }
 
 ///<summary>
@@ -107,11 +131,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
-	int width, height;
-	SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
-	int x = SCREEN_WIDTH / 2 - width / 2;
-	int y = SCREEN_HEIGHT / 2 - height / 2;
-	renderTexture(m_texture, x, y, 200, 200);
+	renderSys.draw(m_renderer);
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -120,12 +140,6 @@ void Game::render()
 /// </summary>
 void Game::cleanup()
 {
-	// Destroy all textures
-	for (auto &tex : m_textures)
-	{
-		SDL_DestroyTexture(tex);
-	}
-
 	// Destroy Window
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
@@ -149,19 +163,6 @@ void Game::log(const std::string &message)
 		std::cout << message << std::endl;
 	}
 }
-
-///<summary>
-/// Function to load in neccessary resources (images, sounds, fonts etc.)
-///</summary>
-bool Game::loadResources()
-{
-	// return flag for succesful load;
-	bool success = true;
-
-	// queue resource loading here
-	return success;
-}
-
 
 /// <summary>
 /// Texture loading function
@@ -215,26 +216,6 @@ void Game::renderTexture(SDL_Texture * texture, int x, int y)
 /// @param h - height of the texutre to be drawn
 ///</summary>
 void Game::renderTexture(SDL_Texture * texture, int x, int y, int w, int h)
-{
-	SDL_Rect targetRect;
-	targetRect.x = x;
-	targetRect.y = y;
-	targetRect.w = w;
-	targetRect.h = h;
-	SDL_RenderCopy(m_renderer, texture, nullptr, &targetRect);
-}
-
-///<summary>
-/// Render the target location within a texture
-/// @param texture - pointer to the texture object we want to render
-/// @param x - start x loc of where we want the target rendererd
-/// @param y - start y loc of render target
-/// @param _x - the end range of the x component of the texture we want rendered
-/// @param _y - the end range of the y component of the texture we want rendered
-/// @param w - width of the texture to be drawn
-/// @param h - height of the texutre to be drawn
-///</summary>
-void Game::renderTexture(SDL_Texture * texture, int x, int y, int _x, int _y, int w, int h)
 {
 	SDL_Rect targetRect;
 	targetRect.x = x;

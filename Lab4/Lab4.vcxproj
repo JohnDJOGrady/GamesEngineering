@@ -73,12 +73,17 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SDL_SDK)\include;.\include;${ProjectDirectory);</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SDL_SDK)\lib;</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SDL_SDK)\include;$(ProjectDirectory);.\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SDL_SDK)\lib\x64;</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SDL_SDK)\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SDL_SDK)\lib\x86;</AdditionalLibraryDirectories>
@@ -93,6 +98,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2_image.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -123,20 +132,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\HealthComponent.cpp" />
+    <ClCompile Include="src\Components\PositionComponent.cpp" />
+    <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\Entitys\Entity.cpp" />
     <ClCompile Include="src\game.cpp" />
-    <ClCompile Include="src\inputHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Systems\HealthSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Systems\System.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Components\Component.h" />
+    <ClInclude Include="include\Components\HealthComponent.h" />
+    <ClInclude Include="include\Components\PositionComponent.h" />
     <ClInclude Include="include\Components\SpriteComponent.h" />
-    <ClInclude Include="include\ConcreteCommand.h" />
     <ClInclude Include="include\Entitys\Entity.h" />
     <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\Systems\HealthSystem.h" />
+    <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

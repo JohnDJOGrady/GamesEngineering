@@ -4,20 +4,20 @@ Entity::Entity()
 {
 }
 
-void Entity::addComponent(Component c)
+void Entity::addComponent(Component* com)
 {
-	m_components.push_back(c);
+	m_components.push_back(com);
 }
 
-void Entity::removeComponent(Component c)
+void Entity::removeComponent(Component* com)
 {
 	if (!m_components.empty())
 	{
-		m_components.erase(std::remove(m_components.begin(), m_components.end(), c), m_components.end());
+		m_components.erase(std::remove(m_components.begin(), m_components.end(), com), m_components.end());
 	}
 }
 
-std::vector<Component> Entity::getComponents()
+std::vector<Component*> Entity::getComponents()
 {
 	return m_components;
 }

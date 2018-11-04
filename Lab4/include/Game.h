@@ -3,10 +3,12 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <Entitys/Entity.h>
+#include <Systems/RenderSystem.h>
+#include <Systems/HealthSystem.h>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <InputHandler.h>
 
 //Screen dimension constants 
 const int SCREEN_WIDTH = 1600;
@@ -24,14 +26,11 @@ public:
 	void render();
 	void cleanup();
 
-
 	void log(const std::string &message);
-	bool loadResources();
 
 	SDL_Texture* loadTexture(std::string &path);
 	void renderTexture(SDL_Texture* texture, int x, int y);
 	void renderTexture(SDL_Texture* texture, int x, int y, int w, int h);
-	void renderTexture(SDL_Texture* texture, int x, int y, int _x, int _y, int w, int h);
 
 private:
 	// default resource path
@@ -45,9 +44,11 @@ private:
 
 	//The surface contained by the window 
 	SDL_Surface* m_screenSurface = nullptr;
-	SDL_Texture* m_texture = nullptr;
-	InputHandler m_keys;
-	std::vector<SDL_Texture*> m_textures;
+	SDL_Texture* m_spriteSheet;
+
+	Entity player, alien, cat, dog;
+	RenderSystem renderSys;
+	HealthSystem healthSys;
 };
 
 #endif // ! GAME_H
